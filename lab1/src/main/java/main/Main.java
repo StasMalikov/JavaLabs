@@ -1,8 +1,21 @@
 package main;
 
-public class Main {
-    public static void main(String[] args) {
+/**
+ * Стартовый класс.
+ */
+public final class Main {
 
+    /**
+     * Конструктор.
+     */
+    private Main() {
+
+    }
+    /**
+     * стартовый метод.
+     * @param args аргументы командной строки
+     */
+    public static void main(final String[] args) {
         System.out.println("Hello Java!");
     }
 }

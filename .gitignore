@@ -1,4 +1,6 @@
 .idea/
+target/
+*.lst
 # Compiled class file
 *.class
 
