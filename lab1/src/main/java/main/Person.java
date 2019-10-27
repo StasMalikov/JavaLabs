@@ -28,7 +28,6 @@ public final class Person {
     private String gender;
 
     /**
-     *
      * @param id идентификатор
      * @param fullName полное имя (ФИО)
      * @param birthDay день рождения
@@ -43,7 +42,6 @@ public final class Person {
     }
 
     /**
-     *
      * @param id присваемый идентификатор.
      */
     public void setId(final int id) {
@@ -51,7 +49,6 @@ public final class Person {
     }
 
     /**
-     *
      * @return идентификатор.
      */
     public int getId() {
@@ -59,7 +56,6 @@ public final class Person {
     }
 
     /**
-     *
      * @param fullName полное имя.
      */
     public void setFullName(final String fullName) {
@@ -67,7 +63,6 @@ public final class Person {
     }
 
     /**
-     *
      * @return полное имя.
      */
     public String getFullName() {
@@ -75,7 +70,6 @@ public final class Person {
     }
 
     /**
-     *
      * @param birthDay дата дня рождения.
      */
     public void setBirthDay(final LocalDate birthDay) {
@@ -83,7 +77,6 @@ public final class Person {
     }
 
     /**
-     *
      * @return дата дня рождения.
      */
     public LocalDate getBirthDay() {
@@ -115,7 +108,6 @@ public final class Person {
     }
 
     /**
-     *
      * @param gender пол человека.
      */
     public void setGender(final String gender) {
@@ -123,7 +115,6 @@ public final class Person {
     }
 
     /**
-     *
      * @return пол человека.
      */
     public String getGender() {
