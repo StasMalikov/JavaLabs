@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Класс человека.
  */
-public final class Person {
+public final class Person implements Cloneable {
 
     /**
      * идентифицирующее поле.
@@ -167,5 +167,12 @@ public final class Person {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getFullName(), getBirthDay(), getGender());
+    }
+
+    /**
+     * @return clone of this obj
+     */
+    public Person clone() {
+        return  new Person(id ,fullName, birthDay, gender);
     }
 }
