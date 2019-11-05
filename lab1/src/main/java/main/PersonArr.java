@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * Класс - репозиторий классов Person.
  */
-public class PersonArr {
+public class PersonArr implements Collection {
 
     /**
      * В этом поле хрантся экземпляры класс Person.
@@ -41,10 +41,16 @@ public class PersonArr {
     }
 
     /**
-     * @return текущий размер массива.
+     * @return количество ненулевых элементов массива.
      */
     public int getLength() {
-        return arr.length;
+        int i = 0;
+        for (Person j : arr) {
+            if (j != null) {
+                i++;
+            }
+        }
+        return i;
     }
 
     /**
@@ -60,7 +66,7 @@ public class PersonArr {
     }
 
     /**
-     * Поиск в коллекции по артибуту
+     * Поиск в коллекции по артибуту.
      * @param fullName параметр по которому производится поиск (имя)
      * @return найденный или пустой экземпляр класса Optional
      */
@@ -74,7 +80,7 @@ public class PersonArr {
     }
 
     /**
-     * Поиск в коллекции по артибуту
+     * Поиск в коллекции по артибуту.
      * @param id параметр по которому производится поиск (идентификатор)
      * @return найденный или пустой экземпляр класса Optional
      */
@@ -88,11 +94,11 @@ public class PersonArr {
     }
 
     /**
-     * Поиск в коллекции по артибуту
+     * Поиск в коллекции по артибуту.
      * @param birthDay параметр по которому производится поиск (день рождениия)
      * @return найденный или пустой экземпляр класса Optional
      */
-    public Optional<Person> Find(final LocalDate birthDay) {
+    public Optional<Person> find(final LocalDate birthDay) {
         for (Person i : arr) {
             if (i.getBirthDay() == birthDay) {
                 return Optional.of(i);
@@ -102,7 +108,7 @@ public class PersonArr {
     }
 
     /**
-     * Поиск в коллекции по артибуту
+     * Поиск в коллекции по артибуту.
      * @param gender параметр по которому производится поиск (пол)
      * @return найденный или пустой экземпляр класса Optional
      */
@@ -159,13 +165,14 @@ public class PersonArr {
     }
 
     /**
-     * сортировка пузырьком коллекции по имени в алфавитном порядке
+     * сортировка пузырьком коллекции по имени в алфавитном порядке.
      */
     public void bubbleSortByName() {
-        for (int i = arr.length-1 ; i > 0 ; i--) {
-            for (int j = 0 ; j < i ; j++) {
-                if(arr[j]!= null && arr[j+1]!= null) {
-                    if (arr[j].getFullName().compareTo(arr[j + 1].getFullName()) > 0) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] != null && arr[j + 1] != null) {
+                    if (arr[j].getFullName().compareTo(
+                            arr[j + 1].getFullName()) > 0) {
                         Person tmp = arr[j].clone();
                         arr[j] = arr[j + 1].clone();
                         arr[j + 1] = tmp.clone();
@@ -176,13 +183,15 @@ public class PersonArr {
     }
 
     /**
-     * сортировка пузырьком коллекции по дате рождения. от ранней даты к поздней (20.10.10 ; 20.10.12 ; 20.10.15 )
+     * сортировка пузырьком коллекции по дате рождения.
+     * от ранней даты к поздней (20.10.10 ; 20.10.12 ; 20.10.15 )
      */
     public void bubbleSortByBirthDate() {
-        for (int i = arr.length-1 ; i > 0 ; i--) {
-            for (int j = 0 ; j < i ; j++) {
-                if(arr[j]!= null && arr[j+1]!= null) {
-                    if (arr[j].getBirthDay().isAfter(arr[j + 1].getBirthDay()) ) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] != null && arr[j + 1] != null) {
+                    if (arr[j].getBirthDay().isAfter(
+                            arr[j + 1].getBirthDay())) {
                         Person tmp = arr[j].clone();
                         arr[j] = arr[j + 1].clone();
                         arr[j + 1] = tmp.clone();

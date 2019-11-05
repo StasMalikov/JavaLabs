@@ -173,6 +173,6 @@ public final class Person implements Cloneable {
      * @return clone of this obj
      */
     public Person clone() {
-        return  new Person(id ,fullName, birthDay, gender);
+        return new Person(id, fullName, birthDay, gender);
     }
 }
