@@ -93,18 +93,13 @@ public final class Person implements Cloneable {
         LocalDate now = LocalDate.now();
 
         if (now.getYear() < birthDay.getYear()
-                || (now.getYear() >= birthDay.getYear()
+                || (now.getYear() == birthDay.getYear()
                 && now.getDayOfYear() < birthDay.getDayOfYear())) {
             return -1;
         }
 
-        if (now.getMonthOfYear() >= birthDay.getMonthOfYear()
-                && now.getDayOfMonth() >= birthDay.getDayOfMonth()) {
-            return now.getYear() - birthDay.getYear();
-        }
-
-        return now.getYear() - birthDay.getYear() - 1 >= 0
-                ? now.getYear() - birthDay.getYear() - 1 : 0;
+        return now.getDayOfYear() >= birthDay.getDayOfYear()
+                ? now.getYear() - birthDay.getYear() : now.getYear() - birthDay.getYear() - 1;
     }
 
     /**
