@@ -100,7 +100,7 @@ public class PersonArr implements Collection {
      */
     public Optional<Person> find(final LocalDate birthDay) {
         for (Person i : arr) {
-            if (i.getBirthDay() == birthDay) {
+            if (i.getBirthDay().compareTo(birthDay) == 0) {
                 return Optional.of(i);
             }
         }
