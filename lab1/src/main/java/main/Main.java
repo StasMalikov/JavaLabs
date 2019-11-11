@@ -10,7 +10,8 @@ public final class Main {
      * Конструктор.
      */
     private Main() {
-
+        PersonArr a =new PersonArr();
+        a.insertionSortByName();
     }
 
     /**

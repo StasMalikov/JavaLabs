@@ -200,5 +200,35 @@ public class PersonArr implements Collection {
             }
         }
     }
+	
+	public void insertionSortByName() {
+		for (int left = 0; left < this.getLength(); left++) {
+			Person value = arr[left].clone();
+            int i = left - 1;
+            for (; i >= 0; i--) {
+                if (arr[i].getFullName().compareTo(value.getFullName()) > 0) {
+                    arr[i + 1] = arr[i].clone();
+                } else {
+                    break;
+                }
+            }
+            arr[i + 1] = value.clone();
+		}
+	}
+
+	public void insertionSortByBirthDate() {
+        for (int left = 0; left < this.getLength(); left++) {
+            Person value = arr[left].clone();
+            int i = left - 1;
+            for (; i >= 0; i--) {
+                if (arr[i].getBirthDay().isAfter(value.getBirthDay())) {
+                    arr[i + 1] = arr[i].clone();
+                } else {
+                    break;
+                }
+            }
+            arr[i + 1] = value.clone();
+        }
+    }
 
 }
