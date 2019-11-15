@@ -1,86 +1,127 @@
 package main;
-import  org.joda.time.LocalDate;
+import main.entities.IDivision;
+import main.entities.IPerson;
+import main.entities.enums.Gender;
+import java.math.BigDecimal;
 import java.util.Objects;
+import java.time.LocalDate;
 
 /**
  * Класс человека.
  */
-public final class Person implements Cloneable {
+public final class Person implements IPerson, Cloneable {
 
     /**
      * идентифицирующее поле.
      */
-    private int id;
+    private Integer id;
+
+    @Override
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    @Override
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public IDivision getDivision() {
+        return division;
+    }
+
+    @Override
+    public void setDivision(IDivision division) {
+        this.division = division;
+    }
 
     /**
-     *полное имя человека.
+     *имя человека.
      */
-    private String fullName;
+    private String firstName;
+
+    /**
+     *фамилия человека.
+     */
+    private String lastName;
+
 
     /**
      *дата дня рождения человека.
      */
-    private LocalDate birthDay;
+    private LocalDate Birthdate;
 
     /**
      *пол человека.
      */
-    private String gender;
+    private Gender gender;
+
+    private IDivision division;
+
+    private BigDecimal salary;
 
     /**
      * @param id идентификатор
-     * @param fullName полное имя (ФИО)
-     * @param birthDay день рождения
+     * @param Birthdate день рождения
      * @param gender пол
      */
-    public Person(final int id, final String fullName,
-                  final LocalDate birthDay, final String gender) {
+    public Person(final Integer id, final String firstName, final String lastName,
+                  final LocalDate Birthdate, final Gender gender) {
         this.id = id;
-        this.fullName = fullName;
-        this.birthDay = birthDay;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.Birthdate = Birthdate;
         this.gender = gender;
     }
+
+    @Override
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Override
+    public String getFirstName() {
+        return lastName;
+    }
+
+    @Override
+    public void setFirstName(String lastName) {
+        this.lastName = lastName;
+    }
+
 
     /**
      * @param id присваемый идентификатор.
      */
-    public void setId(final int id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
     /**
      * @return идентификатор.
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
-     * @param fullName полное имя.
+     * @param Birthdate дата дня рождения.
      */
-    public void setFullName(final String fullName) {
-        this.fullName = fullName;
-    }
-
-    /**
-     * @return полное имя.
-     */
-    public String getFullName() {
-        return fullName;
-    }
-
-    /**
-     * @param birthDay дата дня рождения.
-     */
-    public void setBirthDay(final LocalDate birthDay) {
-        this.birthDay = birthDay;
+    public void setBirthdate(final LocalDate Birthdate) {
+        this.Birthdate = Birthdate;
     }
 
     /**
      * @return дата дня рождения.
      */
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public LocalDate getBirthdate() {
+        return Birthdate;
     }
 
     /**
@@ -88,31 +129,31 @@ public final class Person implements Cloneable {
      * @return количество лет.
      * Если день рождения определён в будущем том возвращяется значение -1.
      */
-    public int getAge() {
+    public Integer getAge() {
 
         LocalDate now = LocalDate.now();
 
-        if (now.getYear() < birthDay.getYear()
-                || (now.getYear() == birthDay.getYear()
-                && now.getDayOfYear() < birthDay.getDayOfYear())) {
+        if (now.getYear() < Birthdate.getYear()
+                || (now.getYear() == Birthdate.getYear()
+                && now.getDayOfYear() < Birthdate.getDayOfYear())) {
             return -1;
         }
 
-        return now.getDayOfYear() >= birthDay.getDayOfYear()
-                ? now.getYear() - birthDay.getYear() : now.getYear() - birthDay.getYear() - 1;
+        return now.getDayOfYear() >= Birthdate.getDayOfYear()
+                ? now.getYear() - Birthdate.getYear() : now.getYear() - Birthdate.getYear() - 1;
     }
 
     /**
      * @param gender пол человека.
      */
-    public void setGender(final String gender) {
+    public void setGender(final Gender gender) {
         this.gender = gender;
     }
 
     /**
      * @return пол человека.
      */
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -124,50 +165,44 @@ public final class Person implements Cloneable {
     public String toString() {
         return "Person{" + "id="
                 + id
-                + ", fullName='"
-                + fullName
+                + ", firstName='"
+                + firstName
+                + ", lastName='"
+                + lastName
                 + '\''
-                + ", birthDay="
-                + birthDay
+                + ", Birthdate="
+                + Birthdate
                 + ", gender='"
                 + gender
                 + '\''
                 + '}';
     }
 
-    /**
-     *Сгенерированный метод сравнения двух экземпляров классов.
-     * @param o обьект сравнения.
-     * @return результат сравнения.
-     */
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return getId() == person.getId()
-                && Objects.equals(getFullName(), person.getFullName())
-                && Objects.equals(getBirthDay(), person.getBirthDay())
-                && Objects.equals(getGender(), person.getGender());
+        return Objects.equals(getId(), person.getId()) &&
+                Objects.equals(getFirstName(), person.getFirstName()) &&
+                Objects.equals(getLastName(), person.getLastName()) &&
+                Objects.equals(getBirthdate(), person.getBirthdate()) &&
+                getGender() == person.getGender() &&
+                Objects.equals(getDivision(), person.getDivision()) &&
+                Objects.equals(getSalary(), person.getSalary());
     }
 
-    /**
-     * Сгенерированный метод вычисления хэша класса.
-     * @return вычисленный хэш.
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFullName(), getBirthDay(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getBirthdate(), getGender(), getDivision(), getSalary());
     }
 
     /**
      * @return clone of this obj
      */
-    public Person clone() {
-        return new Person(id, fullName, birthDay, gender);
+    public IPerson clone() {
+        return new Person(id, firstName, lastName, Birthdate, gender);
     }
+
+
 }

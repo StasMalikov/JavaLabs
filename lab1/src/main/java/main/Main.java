@@ -1,5 +1,4 @@
 package main;
-import org.joda.time.LocalDate;
 
 /**
  * Стартовый класс.
