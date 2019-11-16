@@ -1,10 +1,7 @@
 package main;
 
 import main.entities.IPerson;
-import main.entities.enums.Gender;
 import main.repository.IRepository;
-
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -30,6 +27,10 @@ public class PersonArr implements IRepository {
      * Размер массива по умолчанию.
      */
     public static final int INITLENGTH = 5;
+
+    /**
+     * константа на которую увеличивается размер массива.
+     */
     public static final double ARRSIZEINCREASEFACTOR = 1.5;
 
     /**
@@ -61,6 +62,9 @@ public class PersonArr implements IRepository {
         return i;
     }
 
+    /**
+     * приведение к списку.
+     */
     public List<IPerson> toList() {
         return Arrays.asList(arr);
     }
@@ -77,13 +81,19 @@ public class PersonArr implements IRepository {
         return Optional.empty();
     }
 
-    public void set(int index, IPerson person) {
+    /**
+     * изменяем элемент массива на позиции index.
+     */
+    public void set(final int index, final IPerson person) {
         if (index < arr.length && index >= 0) {
             arr[index] = person;
         }
     }
 
-    public IRepository searchBy(Predicate<IPerson> condition) {
+    /**
+     * поиск по массиву.
+     */
+    public IRepository searchBy(final Predicate<IPerson> condition) {
         IRepository repository = new PersonArr();
         for (int i = 0; i < arr.length; i++) {
             if (condition.test(arr[i])) {
@@ -99,42 +109,52 @@ public class PersonArr implements IRepository {
      */
     public void add(final IPerson person) {
         if (lastAddIndex + 1 < arr.length) {
-            arr[++lastAddIndex] = ((Person)person).clone();
+            arr[++lastAddIndex] = ((Person) person).clone();
         } else {
-            Person[] newArr = new Person[ (int)(arr.length + arr.length*ARRSIZEINCREASEFACTOR) ];
+            Person[] newArr =
+                    new Person[(int) (arr.length
+                            + arr.length * ARRSIZEINCREASEFACTOR)];
             for (int i = 0; i < arr.length; i++) {
                 if (arr[i] != null) {
-                    newArr[i] = (Person)((Person)arr[i]).clone();
+                    newArr[i] = (Person) ((Person) arr[i]).clone();
                 }
             }
-            newArr[++lastAddIndex] = (Person)((Person)person).clone();
+            newArr[++lastAddIndex] = (Person) ((Person) person).clone();
             arr = newArr;
         }
     }
 
-    public void add(int index, IPerson person) {
+    /**
+     *вставляем person на позицию index в массиве arr,
+     *  по необходимости расширяем массив.
+     */
+    public void add(final int index, final IPerson person) {
         if (lastAddIndex + 1 < arr.length) {
 
-            Person tmp = (Person)((Person)arr[index]).clone();
+            Person tmp = (Person) ((Person) arr[index]).clone();
             arr[index] = person;
 
-            for(int i = index + 1; i < arr.length; i++) {
-                Person tmp2 = arr[i] == null ? null : (Person)((Person)arr[i]).clone();
+            for (int i = index + 1; i < arr.length; i++) {
+                Person tmp2 = arr[i] == null ?
+                        null : (Person) ((Person) arr[i]).clone();
                 arr[i] = tmp == null ? null : tmp.clone();
                 tmp = tmp2 == null ? null : (Person) tmp2.clone();
                 }
 
             } else {
-                IPerson[] newArr = new IPerson[ (int)(arr.length + arr.length*ARRSIZEINCREASEFACTOR) ];
+                IPerson[] newArr =
+                        new IPerson[(int) (arr.length
+                                + arr.length * ARRSIZEINCREASEFACTOR)];
                 for (int i = 0; i < index; i++) {
                     newArr[i] = arr[i];
                 }
 
-                Person tmp = (Person)((Person)arr[index]).clone();
+                Person tmp = (Person) ((Person) arr[index]).clone();
                 newArr[index] = person;
 
-                for(int i = index + 1; i < arr.length + 1; i++) {
-                    Person tmp2 = arr[i] == null ? null : (Person)((Person)arr[i]).clone();
+                for (int i = index + 1; i < arr.length + 1; i++) {
+                    Person tmp2 = arr[i] == null ?
+                            null : (Person) ((Person) arr[i]).clone();
                     newArr[i] = tmp == null ? null : tmp.clone();
                     tmp = tmp2 == null ? null : (Person) tmp2.clone();
                 }
@@ -142,8 +162,6 @@ public class PersonArr implements IRepository {
                 arr = newArr;
         }
     }
-
-
 
     /**
      * Удаляет из массива элемент на позиции index.
@@ -153,7 +171,7 @@ public class PersonArr implements IRepository {
         if (index < arr.length && index >= 0) {
 
             for (int i = index; i < lastAddIndex; i++) {
-                arr[i] = ((Person)arr[i + 1]).clone();
+                arr[i] = ((Person) arr[i + 1]).clone();
             }
             arr[lastAddIndex--] = null;
         }
@@ -162,13 +180,13 @@ public class PersonArr implements IRepository {
     /**
      * сортировка пузырьком коллекции.
      */
-    public void bubbleSortBy(Comparator<IPerson> comparator) {
+    public void bubbleSortBy(final Comparator<IPerson> comparator) {
         for (int i = arr.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (arr[j] != null && arr[j + 1] != null) {
                     if (comparator.compare(arr[j], arr[j + 1]) > 0) {
-                        Person tmp = (Person)((Person)arr[j]).clone();
-                        arr[j] = ((Person)arr[j + 1]).clone();
+                        Person tmp = (Person) ((Person) arr[j]).clone();
+                        arr[j] = ((Person) arr[j + 1]).clone();
                         arr[j + 1] = tmp.clone();
                     }
                 }
@@ -177,15 +195,15 @@ public class PersonArr implements IRepository {
     }
 
     /**
-     * сортировка вставками
+     * сортировка вставками.
      */
-	public void sortBy(Comparator<IPerson> comparator) {
+	public void sortBy(final Comparator<IPerson> comparator) {
 		for (int left = 0; left < this.getLength(); left++) {
-			Person value = (Person)((Person)arr[left]).clone();
+			Person value = (Person) ((Person) arr[left]).clone();
             int i = left - 1;
             for (; i >= 0; i--) {
                 if (comparator.compare(arr[i], value) > 0) {
-                    arr[i + 1] = ((Person)arr[i]).clone();
+                    arr[i + 1] = ((Person) arr[i]).clone();
                 } else {
                     break;
                 }

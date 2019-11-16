@@ -16,26 +16,6 @@ public final class Person implements IPerson, Cloneable {
      */
     private Integer id;
 
-    @Override
-    public BigDecimal getSalary() {
-        return salary;
-    }
-
-    @Override
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
-    }
-
-    @Override
-    public IDivision getDivision() {
-        return division;
-    }
-
-    @Override
-    public void setDivision(IDivision division) {
-        this.division = division;
-    }
-
     /**
      *имя человека.
      */
@@ -50,51 +30,100 @@ public final class Person implements IPerson, Cloneable {
     /**
      *дата дня рождения человека.
      */
-    private LocalDate Birthdate;
+    private LocalDate birthdate;
 
     /**
      *пол человека.
      */
     private Gender gender;
 
+    /**
+     *разделение.
+     */
     private IDivision division;
 
+    /**
+     * зарплата.
+     */
     private BigDecimal salary;
 
     /**
-     * @param id идентификатор
-     * @param Birthdate день рождения
-     * @param gender пол
+     * Конструктор, заполняющий все поля класса.
      */
-    public Person(final Integer id, final String firstName, final String lastName,
-                  final LocalDate Birthdate, final Gender gender,
-                  final BigDecimal salary, IDivision division) {
+    public Person(final Integer id, final String firstName,
+                  final String lastName,
+                  final LocalDate birthdate, final Gender gender,
+                  final BigDecimal salary, final IDivision division) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.Birthdate = Birthdate;
+        this.birthdate = birthdate;
         this.gender = gender;
         this.salary = salary;
         this.division = division;
     }
 
+    /**
+     *@return зарплата.
+     */
+    @Override
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    /**
+     *устанавливаем зарплату.
+     */
+    @Override
+    public void setSalary(final BigDecimal salary) {
+        this.salary = salary;
+    }
+
+    /**
+     *возвращяем разделение.
+     */
+    @Override
+    public IDivision getDivision() {
+        return division;
+    }
+
+    /**
+     *задаём разделение.
+     */
+    @Override
+    public void setDivision(final IDivision division) {
+        this.division = division;
+    }
+
+    /**
+     *возвращяем фамилию.
+     */
     @Override
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     *задаём фамилию.
+     */
     @Override
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * @return имя.
+     */
     @Override
     public String getFirstName() {
         return lastName;
     }
 
+    /**
+     *задаём имя.
+     */
     @Override
-    public void setFirstName(String lastName) {
+    public void setFirstName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -114,17 +143,17 @@ public final class Person implements IPerson, Cloneable {
     }
 
     /**
-     * @param Birthdate дата дня рождения.
+     * @param birthdate дата дня рождения.
      */
-    public void setBirthdate(final LocalDate Birthdate) {
-        this.Birthdate = Birthdate;
+    public void setBirthdate(final LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 
     /**
      * @return дата дня рождения.
      */
     public LocalDate getBirthdate() {
-        return Birthdate;
+        return birthdate;
     }
 
     /**
@@ -136,14 +165,15 @@ public final class Person implements IPerson, Cloneable {
 
         LocalDate now = LocalDate.now();
 
-        if (now.getYear() < Birthdate.getYear()
-                || (now.getYear() == Birthdate.getYear()
-                && now.getDayOfYear() < Birthdate.getDayOfYear())) {
+        if (now.getYear() < birthdate.getYear()
+                || (now.getYear() == birthdate.getYear()
+                && now.getDayOfYear() < birthdate.getDayOfYear())) {
             return -1;
         }
 
-        return now.getDayOfYear() >= Birthdate.getDayOfYear()
-                ? now.getYear() - Birthdate.getYear() : now.getYear() - Birthdate.getYear() - 1;
+        return now.getDayOfYear() >= birthdate.getDayOfYear()
+                ? now.getYear() - birthdate.getYear() :
+                now.getYear() - birthdate.getYear() - 1;
     }
 
     /**
@@ -160,21 +190,28 @@ public final class Person implements IPerson, Cloneable {
         return gender;
     }
 
+    /**
+     * строка, составленная из полей класса.
+     */
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", Birthdate=" + Birthdate +
+                ", birthdate=" + birthdate +
                 ", gender=" + gender +
                 ", division=" + division +
                 ", salary=" + salary +
                 '}';
     }
 
+    /**
+     * сравнение этого экземпляра класса и передаваемого в параметры.
+     * @return результат сравнения.
+     */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
@@ -187,6 +224,9 @@ public final class Person implements IPerson, Cloneable {
                 Objects.equals(getSalary(), person.getSalary());
     }
 
+    /**
+     * @return вычесленный хэш код.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getFirstName(), getLastName(), getBirthdate(), getGender(), getDivision(), getSalary());
@@ -196,6 +236,6 @@ public final class Person implements IPerson, Cloneable {
      * @return clone of this obj
      */
     public IPerson clone() {
-        return new Person(id, firstName, lastName, Birthdate, gender, salary, division);
+        return new Person(id, firstName, lastName, birthdate, gender, salary, division);
     }
 }

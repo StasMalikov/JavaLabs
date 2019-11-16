@@ -1,10 +1,11 @@
 package main;
 
-import main.Person;
 import main.entities.IPerson;
 import java.util.Comparator;
 
-
+/**
+ * компоратор сравненияя по имени.
+ */
 public class FirstNameComporator implements Comparator<IPerson> {
 
     /**
@@ -13,7 +14,7 @@ public class FirstNameComporator implements Comparator<IPerson> {
      * @return -1 если p1 < p2
      */
     @Override
-    public int compare(IPerson p1, IPerson p2) {
+    public int compare(final IPerson p1, final IPerson p2) {
         if (p1.getFirstName() == p2.getFirstName()) {
             return  0;
         }
