@@ -11,9 +11,9 @@ public class BirthdateCopmorator implements Comparator<IPerson> {
      */
     @Override
     public int compare(IPerson p1, IPerson p2) {
-        if (p1.getFirstName() == p2.getFirstName()) {
+        if (p1.getBirthdate() == p2.getBirthdate()) {
             return  0;
         }
-        return p1.getFirstName().compareTo(p2.getFirstName()) > 0 ?  1 : -1;
+        return p1.getBirthdate().isAfter(p2.getBirthdate()) ?  1 : -1;
     }
 }

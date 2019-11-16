@@ -6,8 +6,10 @@ import main.repository.IRepository;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Класс - репозиторий классов Person.
@@ -81,60 +83,14 @@ public class PersonArr implements IRepository {
         }
     }
 
-    /**
-     * Поиск в коллекции по артибуту.
-     * @param firstName параметр по которому производится поиск (имя)
-     * @return найденный или пустой экземпляр класса Optional
-     */
-    public Optional<IPerson> find(final String firstName) {
-        for (IPerson i : arr) {
-            if (i.getFirstName() == firstName) {
-                return Optional.of(i);
+    public IRepository searchBy(Predicate<IPerson> condition) {
+        IRepository repository = new PersonArr();
+        for (int i = 0; i < arr.length; i++) {
+            if (condition.test(arr[i])) {
+                repository.add(arr[i]);
             }
         }
-        return Optional.empty();
-    }
-
-    /**
-     * Поиск в коллекции по артибуту.
-     * @param id параметр по которому производится поиск (идентификатор)
-     * @return найденный или пустой экземпляр класса Optional
-     */
-    public Optional<IPerson> find(final int id) {
-        for (IPerson i : arr) {
-            if (i.getId() == id) {
-                return Optional.of(i);
-            }
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Поиск в коллекции по артибуту.
-     * @param birthDate параметр по которому производится поиск (день рождениия)
-     * @return найденный или пустой экземпляр класса Optional
-     */
-    public Optional<IPerson> find(final LocalDate birthDate) {
-        for (IPerson i : arr) {
-            if (i.getBirthdate().compareTo(birthDate) == 0) {
-                return Optional.of(i);
-            }
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Поиск в коллекции по артибуту.
-     * @param gender параметр по которому производится поиск (пол)
-     * @return найденный или пустой экземпляр класса Optional
-     */
-    public Optional<IPerson> findByGender(final Gender gender) {
-        for (IPerson i : arr) {
-            if (i.getGender() == gender) {
-                return Optional.of(i);
-            }
-        }
-        return Optional.empty();
+        return repository;
     }
 
     /**
@@ -204,14 +160,13 @@ public class PersonArr implements IRepository {
     }
 
     /**
-     * сортировка пузырьком коллекции по имени в алфавитном порядке.
+     * сортировка пузырьком коллекции.
      */
-    public void bubbleSortByFirstName() {
+    public void bubbleSortBy(Comparator<IPerson> comparator) {
         for (int i = arr.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (arr[j] != null && arr[j + 1] != null) {
-                    if (arr[j].getFirstName().compareTo(
-                            arr[j + 1].getFirstName()) > 0) {
+                    if (comparator.compare(arr[j], arr[j + 1]) > 0) {
                         Person tmp = (Person)((Person)arr[j]).clone();
                         arr[j] = ((Person)arr[j + 1]).clone();
                         arr[j + 1] = tmp.clone();
@@ -222,30 +177,14 @@ public class PersonArr implements IRepository {
     }
 
     /**
-     * сортировка пузырьком коллекции по дате рождения.
-     * от ранней даты к поздней (20.10.10 ; 20.10.12 ; 20.10.15 )
+     * сортировка вставками
      */
-    public void bubbleSortByBirthDate() {
-        for (int i = arr.length - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (arr[j] != null && arr[j + 1] != null) {
-                    if (arr[j].getBirthdate().isAfter(
-                            arr[j + 1].getBirthdate())) {
-                        Person tmp = (Person)((Person)arr[j]).clone();
-                        arr[j] = ((Person)arr[j + 1]).clone();
-                        arr[j + 1] = tmp.clone();
-                    }
-                }
-            }
-        }
-    }
-	
-	public void insertionSortByFirstName() {
+	public void sortBy(Comparator<IPerson> comparator) {
 		for (int left = 0; left < this.getLength(); left++) {
 			Person value = (Person)((Person)arr[left]).clone();
             int i = left - 1;
             for (; i >= 0; i--) {
-                if (arr[i].getFirstName().compareTo(value.getFirstName()) > 0) {
+                if (comparator.compare(arr[i], value) > 0) {
                     arr[i + 1] = ((Person)arr[i]).clone();
                 } else {
                     break;
@@ -254,20 +193,4 @@ public class PersonArr implements IRepository {
             arr[i + 1] = value.clone();
 		}
 	}
-
-	public void insertionSortByBirthDate() {
-        for (int left = 0; left < this.getLength(); left++) {
-            Person value = (Person)((Person)arr[left]).clone();
-            int i = left - 1;
-            for (; i >= 0; i--) {
-                if (arr[i].getBirthdate().isAfter(value.getBirthdate())) {
-                    arr[i + 1] = ((Person)arr[i]).clone();
-                } else {
-                    break;
-                }
-            }
-            arr[i + 1] = value.clone();
-        }
-    }
-
 }
