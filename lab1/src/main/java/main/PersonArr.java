@@ -5,6 +5,8 @@ import main.entities.enums.Gender;
 import main.repository.IRepository;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +28,7 @@ public class PersonArr implements IRepository {
      * Размер массива по умолчанию.
      */
     public static final int INITLENGTH = 5;
+    public static final double ARRSIZEINCREASEFACTOR = 1.5;
 
     /**
      * @param arrLength размер создаваемого массива.
@@ -54,6 +57,10 @@ public class PersonArr implements IRepository {
             }
         }
         return i;
+    }
+
+    public List<IPerson> toList() {
+        return Arrays.asList(arr);
     }
 
     /**
@@ -136,24 +143,51 @@ public class PersonArr implements IRepository {
      */
     public void add(final IPerson person) {
         if (lastAddIndex + 1 < arr.length) {
-            arr[++lastAddIndex] = new Person(person.getId(),
-                    person.getFirstName(), person.getLastName(),
-                    person.getBirthdate(), person.getGender());
+            arr[++lastAddIndex] = ((Person)person).clone();
         } else {
-            Person[] newArr = new Person[arr.length + INITLENGTH];
+            Person[] newArr = new Person[ (int)(arr.length + arr.length*ARRSIZEINCREASEFACTOR) ];
             for (int i = 0; i < arr.length; i++) {
                 if (arr[i] != null) {
-                    newArr[i] = new Person(arr[i].getId(),
-                            arr[i].getFirstName(), arr[i].getFirstName(),
-                            arr[i].getBirthdate(), arr[i].getGender());
+                    newArr[i] = (Person)((Person)arr[i]).clone();
                 }
             }
-            newArr[++lastAddIndex] = new Person(person.getId(),
-                    person.getFirstName(), person.getLastName(),
-                    person.getBirthdate(), person.getGender());
+            newArr[++lastAddIndex] = (Person)((Person)person).clone();
             arr = newArr;
         }
     }
+
+    public void add(int index, IPerson person) {
+        if (lastAddIndex + 1 < arr.length) {
+
+            Person tmp = (Person)((Person)arr[index]).clone();
+            arr[index] = person;
+
+            for(int i = index + 1; i < arr.length; i++) {
+                Person tmp2 = arr[i] == null ? null : (Person)((Person)arr[i]).clone();
+                arr[i] = tmp == null ? null : tmp.clone();
+                tmp = tmp2 == null ? null : (Person) tmp2.clone();
+                }
+
+            } else {
+                IPerson[] newArr = new IPerson[ (int)(arr.length + arr.length*ARRSIZEINCREASEFACTOR) ];
+                for (int i = 0; i < index; i++) {
+                    newArr[i] = arr[i];
+                }
+
+                Person tmp = (Person)((Person)arr[index]).clone();
+                newArr[index] = person;
+
+                for(int i = index + 1; i < arr.length + 1; i++) {
+                    Person tmp2 = arr[i] == null ? null : (Person)((Person)arr[i]).clone();
+                    newArr[i] = tmp == null ? null : tmp.clone();
+                    tmp = tmp2 == null ? null : (Person) tmp2.clone();
+                }
+                lastAddIndex++;
+                arr = newArr;
+        }
+    }
+
+
 
     /**
      * Удаляет из массива элемент на позиции index.

@@ -67,12 +67,15 @@ public final class Person implements IPerson, Cloneable {
      * @param gender пол
      */
     public Person(final Integer id, final String firstName, final String lastName,
-                  final LocalDate Birthdate, final Gender gender) {
+                  final LocalDate Birthdate, final Gender gender,
+                  final BigDecimal salary, IDivision division) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.Birthdate = Birthdate;
         this.gender = gender;
+        this.salary = salary;
+        this.division = division;
     }
 
     @Override
@@ -157,25 +160,17 @@ public final class Person implements IPerson, Cloneable {
         return gender;
     }
 
-    /**
-     *Сгенерированный метод приведения класса к строке.
-     * @return класс в виде строки.
-     */
     @Override
     public String toString() {
-        return "Person{" + "id="
-                + id
-                + ", firstName='"
-                + firstName
-                + ", lastName='"
-                + lastName
-                + '\''
-                + ", Birthdate="
-                + Birthdate
-                + ", gender='"
-                + gender
-                + '\''
-                + '}';
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", Birthdate=" + Birthdate +
+                ", gender=" + gender +
+                ", division=" + division +
+                ", salary=" + salary +
+                '}';
     }
 
     @Override
@@ -201,8 +196,6 @@ public final class Person implements IPerson, Cloneable {
      * @return clone of this obj
      */
     public IPerson clone() {
-        return new Person(id, firstName, lastName, Birthdate, gender);
+        return new Person(id, firstName, lastName, Birthdate, gender, salary, division);
     }
-
-
 }
