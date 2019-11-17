@@ -201,7 +201,7 @@ public final class Person implements IPerson, Cloneable {
                 ", lastName='" + lastName + '\'' +
                 ", birthdate=" + birthdate +
                 ", gender=" + gender +
-                ", division=" + division +
+                ", division=" + division.getName() +
                 ", salary=" + salary +
                 '}';
     }
