@@ -1,11 +1,10 @@
 package main;
 
+import main.entities.IDivision;
 import main.entities.IPerson;
 import main.repository.IRepository;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -17,6 +16,8 @@ public class PersonArr implements IRepository {
      * В этом поле хрантся экземпляры класс Person.
      */
     private IPerson[] arr;
+
+    private List<IDivision> divisions;
 
     /**
      * индекс последнего добаленного элемента.
@@ -47,6 +48,7 @@ public class PersonArr implements IRepository {
      */
     public PersonArr() {
         arr = new Person[INITLENGTH];
+        divisions = new ArrayList<>();
     }
 
     /**
@@ -62,6 +64,17 @@ public class PersonArr implements IRepository {
         return i;
     }
 
+    public IDivision getDivision(String name) {
+        for (IDivision i : divisions) {
+            if (i.getName().equals(name)) {
+                return i;
+            }
+        }
+        Division division = new Division(name);
+        divisions.add(division);
+        return division;
+    }
+
     /**
      * приведение к списку.
      */
@@ -73,21 +86,24 @@ public class PersonArr implements IRepository {
      * @param index позиция нужного элемента в массиве.
      * @return элемент на позиции index.
      */
-    public  Optional<IPerson> get(final int index) {
+    public  IPerson get(final int index) {
         if (index < arr.length && index >= 0) {
-            return Optional.of(arr[index]);
+            if ( arr[index] != null)
+            return arr[index];
         }
 
-        return Optional.empty();
+        return null;
     }
 
     /**
      * изменяем элемент массива на позиции index.
      */
-    public void set(final int index, final IPerson person) {
+    public IPerson set(final int index, final IPerson person) {
+        Person old = (Person) ((Person) arr[index]).clone();
         if (index < arr.length && index >= 0) {
             arr[index] = person;
         }
+        return old;
     }
 
     /**
@@ -152,7 +168,7 @@ public class PersonArr implements IRepository {
                 Person tmp = (Person) ((Person) arr[index]).clone();
                 newArr[index] = person;
 
-                for (int i = index + 1; i < arr.length + 1; i++) {
+                for (int i = index + 1; i < arr.length; i++) {
                     Person tmp2 = arr[i] == null ?
                             null : (Person) ((Person) arr[i]).clone();
                     newArr[i] = tmp == null ? null : tmp.clone();
@@ -167,48 +183,24 @@ public class PersonArr implements IRepository {
      * Удаляет из массива элемент на позиции index.
      * @param index позиция в массиве удаляемого элемента.
      */
-    public void delete(final int index) {
+    public IPerson delete(final int index) {
+        IPerson delete_item = (Person) ((Person) arr[index]).clone();
         if (index < arr.length && index >= 0) {
-
             for (int i = index; i < lastAddIndex; i++) {
                 arr[i] = ((Person) arr[i + 1]).clone();
             }
             arr[lastAddIndex--] = null;
         }
-    }
-
-    /**
-     * сортировка пузырьком коллекции.
-     */
-    public void bubbleSortBy(final Comparator<IPerson> comparator) {
-        for (int i = arr.length - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (arr[j] != null && arr[j + 1] != null) {
-                    if (comparator.compare(arr[j], arr[j + 1]) > 0) {
-                        Person tmp = (Person) ((Person) arr[j]).clone();
-                        arr[j] = ((Person) arr[j + 1]).clone();
-                        arr[j + 1] = tmp.clone();
-                    }
-                }
-            }
-        }
+        return delete_item;
     }
 
     /**
      * сортировка вставками.
      */
 	public void sortBy(final Comparator<IPerson> comparator) {
-		for (int left = 0; left < this.getLength(); left++) {
-			Person value = (Person) ((Person) arr[left]).clone();
-            int i = left - 1;
-            for (; i >= 0; i--) {
-                if (comparator.compare(arr[i], value) > 0) {
-                    arr[i + 1] = ((Person) arr[i]).clone();
-                } else {
-                    break;
-                }
-            }
-            arr[i + 1] = value.clone();
-		}
+        BubbleSort b = new BubbleSort();
+        InsertionSort i = new InsertionSort();
+        arr = i.sort(comparator, arr);
+//        arr
 	}
 }

@@ -63,6 +63,16 @@ public final class Person implements IPerson, Cloneable {
         this.division = division;
     }
 
+    public Person(Person person) {
+        this.id = person.getId();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.birthdate = person.getBirthdate();
+        this.gender = person.getGender();
+        this.salary = person.getSalary();
+        this.division = person.getDivision();
+    }
+
     /**
      *@return зарплата.
      */
@@ -116,15 +126,15 @@ public final class Person implements IPerson, Cloneable {
      */
     @Override
     public String getFirstName() {
-        return lastName;
+        return firstName;
     }
 
     /**
      *задаём имя.
      */
     @Override
-    public void setFirstName(final String lastName) {
-        this.lastName = lastName;
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
     }
 
 

@@ -11,11 +11,11 @@ public interface IRepository {
 
     public void add(IPerson person);
 
-    public Optional<IPerson> get(int index);
+    public IPerson get(int index);
 
-    public void delete(int index);
+    public IPerson delete(int index);
 
-    public void set(int index, IPerson person);
+    public IPerson set(int index, IPerson person);
 
     public void add(int index, IPerson person);
 
