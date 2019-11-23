@@ -15,9 +15,9 @@ public class FirstNameComporator implements Comparator<IPerson> {
      */
     @Override
     public int compare(final IPerson p1, final IPerson p2) {
-//        if (p1.getFirstName().equals(p2.getFirstName())) {
-//            return  0;
-//        }
+        if (p1.getFirstName().equals(p2.getFirstName())) {
+            return  0;
+        }
         return p1.getFirstName().compareTo(p2.getFirstName()) > 0 ?  1 : -1;
     }
 }

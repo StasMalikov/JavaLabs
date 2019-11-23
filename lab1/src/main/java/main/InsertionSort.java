@@ -5,9 +5,16 @@ import main.repository.IRepository;
 
 import java.util.Comparator;
 
+/**
+ * Класс сортировок вставками.
+ */
 public class InsertionSort {
 
-    public IRepository sort(Comparator<IPerson> comparator, IRepository arr) {
+    /**
+     *Сортировка, которая работает с экземпляром репозитория.
+     */
+    public IRepository sort(final Comparator<IPerson> comparator,
+                                                final IRepository arr) {
         for (int left = 0; left < ((PersonArr) arr).getLength(); left++) {
             Person value =  (Person) arr.get(left);
             int i = left - 1;
@@ -23,8 +30,12 @@ public class InsertionSort {
         return arr;
     }
 
-    public IPerson[] sort(Comparator<IPerson> comparator, IPerson[] arr) {
-        for (int left = 0; left < arr.length ; left++) {
+    /**
+     *Сортировка, которая работает с массивом Person.
+     */
+    public IPerson[] sort(final Comparator<IPerson> comparator,
+                                                final IPerson[] arr) {
+        for (int left = 0; left < arr.length; left++) {
             IPerson value =  (Person) arr[left];
             int i = left - 1;
             for (; i >= 0; i--) {

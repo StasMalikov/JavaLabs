@@ -2,11 +2,25 @@ package main;
 
 import main.entities.IDivision;
 
+/**
+ * Класс подразделения.
+ */
 public class Division implements IDivision {
+
+    /**
+     *Название.
+     */
     private String name;
+
+    /**
+     *Идентификатор.
+     */
     private Integer id;
 
-    public Division(String name) {
+    /**
+     *Конструктор.
+     */
+    public Division(final  String name) {
         this.name = name;
     }
 
@@ -16,7 +30,7 @@ public class Division implements IDivision {
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -26,7 +40,7 @@ public class Division implements IDivision {
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 }

@@ -64,6 +64,10 @@ public class PersonArr implements IRepository {
         return i;
     }
 
+    /**
+     * Ищет в списке подразделений по имени,
+     * если не находит, то создаёт новое.
+     */
     public IDivision getDivision(String name) {
         for (IDivision i : divisions) {
             if (i.getName().equals(name)) {
@@ -125,7 +129,7 @@ public class PersonArr implements IRepository {
      */
     public void add(final IPerson person) {
         if (lastAddIndex + 1 < arr.length) {
-            arr[++lastAddIndex] = ((Person) person).clone();
+            arr[++lastAddIndex] = person != null ? ((Person) person).clone() : null;
         } else {
             Person[] newArr =
                     new Person[(int) (arr.length
@@ -135,7 +139,7 @@ public class PersonArr implements IRepository {
                     newArr[i] = (Person) ((Person) arr[i]).clone();
                 }
             }
-            newArr[++lastAddIndex] = (Person) ((Person) person).clone();
+            newArr[++lastAddIndex] = person != null ? (Person) ((Person) person).clone() : null;
             arr = newArr;
         }
     }
@@ -199,8 +203,7 @@ public class PersonArr implements IRepository {
      */
 	public void sortBy(final Comparator<IPerson> comparator) {
         BubbleSort b = new BubbleSort();
-        InsertionSort i = new InsertionSort();
-        arr = i.sort(comparator, arr);
-//        arr
+//        InsertionSort i = new InsertionSort();
+        arr = b.sort(comparator, arr);
 	}
 }
