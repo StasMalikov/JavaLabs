@@ -1,7 +1,9 @@
-package main;
+package main.reader;
 
-import main.entities.enums.Gender;
-import main.repository.IRepository;
+import main.personEnv.Person;
+import main.personEnv.Repository;
+import ru.vsu.lab.entities.enums.Gender;
+import ru.vsu.lab.repository.IRepository;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -45,7 +47,7 @@ public class MyReader {
      * Парсим список строк в репозотирой Person.
      */
     public IRepository parse(final List<String> lines) {
-        IRepository repository = new PersonArr();
+        IRepository repository = new Repository();
 
         for (int i = 1; i < lines.size(); i++) {
             String[] subStr;
@@ -57,7 +59,7 @@ public class MyReader {
                     LocalDate.parse(subStr[BIRTHDATEINDEX], DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.US)),
                     subStr[GENDERINDEX].equals("Male") ? Gender.MALE :( subStr[2].equals("Female") ? Gender.FEMALE : null),
                     new BigDecimal(subStr[SALARYINDEX]),
-                    ((PersonArr) repository).getDivision(subStr[DIVISIONINDEX])
+                    ((Repository) repository).getDivision(subStr[DIVISIONINDEX])
             ));
         }
         return repository;

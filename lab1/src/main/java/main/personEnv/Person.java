@@ -1,10 +1,12 @@
-package main;
-import main.entities.IDivision;
-import main.entities.IPerson;
-import main.entities.enums.Gender;
+package main.personEnv;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.time.LocalDate;
+
+import ru.vsu.lab.entities.IDivision;
+import ru.vsu.lab.entities.IPerson;
+import ru.vsu.lab.entities.enums.Gender;
 
 /**
  * Класс человека.

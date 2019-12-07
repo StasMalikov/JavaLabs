@@ -1,6 +1,7 @@
-package main;
+package main.comparators;
 
-import main.entities.IPerson;
+import ru.vsu.lab.entities.IPerson;
+
 import java.util.Comparator;
 
 /**

@@ -1,6 +1,7 @@
-package main;
+package main.personEnv;
 
-import main.entities.IDivision;
+
+import ru.vsu.lab.entities.IDivision;
 
 /**
  * Класс подразделения.
