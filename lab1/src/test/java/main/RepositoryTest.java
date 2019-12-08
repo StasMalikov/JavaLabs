@@ -5,6 +5,7 @@ import main.comparators.FirstNameComporator;
 import main.personEnv.Division;
 import main.personEnv.Person;
 import main.personEnv.Repository;
+import main.reader.InjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.vsu.lab.entities.IDivision;
@@ -12,6 +13,7 @@ import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.enums.Gender;
 import ru.vsu.lab.repository.IRepository;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 import java.math.BigDecimal;
 
@@ -24,7 +26,7 @@ public class RepositoryTest {
     IPerson p4;
     IPerson p5;
 
-    public RepositoryTest() {
+    public RepositoryTest() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {
          p1 = new Person(1, "AAA", "",
                 java.time.LocalDate.of(2015,11,30),
                 Gender.FEMALE, new BigDecimal(1000), new Division("A"));
@@ -42,6 +44,7 @@ public class RepositoryTest {
                 Gender.FEMALE, new BigDecimal(1000), new Division("E"));
 
         arr = new Repository<>();
+        arr = InjectUtils.inject(arr);
         arr.add(p1);
         arr.add(p2);
         arr.add(p3);
@@ -160,19 +163,20 @@ public class RepositoryTest {
 //    }
 
 
-//    @Test
-//    public void SortByDate() {
-//        Repository actualArr = new Repository();
-//        actualArr.add(p5.clone());
-//        actualArr.add(p4.clone());
-//        actualArr.add(p3.clone());
-//        actualArr.add(p2.clone());
-//        actualArr.add(p1.clone());
-//        actualArr.sortBy(new BirthdateCopmorator());
-//
-//        for (int i = 0; i < actualArr.getLength(); i++) {
-//            Assert.assertEquals(actualArr.get(i) , arr.get(i));
-//        }
-//    }
+    @Test
+    public void SortByDate() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        IRepository<IPerson> actualArr = new Repository<>();
+        actualArr = InjectUtils.inject(actualArr);
+        actualArr.add(p5);
+        actualArr.add(p4);
+        actualArr.add(p3);
+        actualArr.add(p2);
+        actualArr.add(p1);
+        actualArr.sortBy(new BirthdateCopmorator());
+
+        for (int i = 0; i < ((Repository<IPerson>) actualArr).getLength(); i++) {
+            Assert.assertEquals(actualArr.get(i) , arr.get(i));
+        }
+    }
 
 }

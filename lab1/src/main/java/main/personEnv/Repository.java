@@ -1,6 +1,8 @@
 package main.personEnv;
 
+import main.injector.LabInjector;
 import main.sorts.BubbleSort;
+import main.sorts.ISort;
 import ru.vsu.lab.repository.IRepository;
 
 import java.util.*;
@@ -11,6 +13,8 @@ import java.util.function.Predicate;
  */
 public class Repository<T> implements IRepository<T> {
 
+    @LabInjector
+    private ISort<T> sorter;
     /**
      * В этом поле хрантся экземпляры класс Person.
      */
@@ -206,8 +210,6 @@ public class Repository<T> implements IRepository<T> {
      * @param comparator
      */
 	public void sortBy(final Comparator<T> comparator) {
-        BubbleSort b = new BubbleSort();
-//        InsertionSort i = new InsertionSort();
-//        arr = b.sort(comparator, arr);
+        arr = sorter.sort(comparator, arr);
 	}
 }

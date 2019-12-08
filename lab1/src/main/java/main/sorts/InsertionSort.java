@@ -1,16 +1,11 @@
 package main.sorts;
 
-import main.personEnv.Person;
-import main.personEnv.Repository;
-import ru.vsu.lab.entities.IPerson;
-import ru.vsu.lab.repository.IRepository;
-
 import java.util.Comparator;
 
 /**
  * Класс сортировок вставками.
  */
-public class InsertionSort {
+public class InsertionSort<T> implements ISort<T>{
 
     /**
      *Сортировка, которая работает с экземпляром репозитория.
@@ -35,14 +30,13 @@ public class InsertionSort {
     /**
      *Сортировка, которая работает с массивом Person.
      */
-    public IPerson[] sort(final Comparator<IPerson> comparator,
-                                                final IPerson[] arr) {
+    public T[] sort(final Comparator<T> comparator, final T[] arr) {
         for (int left = 0; left < arr.length; left++) {
-            IPerson value =  (Person) arr[left];
+            T value =   arr[left];
             int i = left - 1;
             for (; i >= 0; i--) {
                 if (comparator.compare(arr[i], value) > 0) {
-                    arr[i + 1] = ((Person) arr[i]).clone();
+                    arr[i + 1] =  arr[i];
                 } else {
                     break;
                 }
