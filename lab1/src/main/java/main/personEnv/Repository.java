@@ -1,8 +1,6 @@
 package main.personEnv;
 
 import main.sorts.BubbleSort;
-import ru.vsu.lab.entities.IDivision;
-import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.repository.IRepository;
 
 import java.util.*;
@@ -17,8 +15,6 @@ public class Repository<T> implements IRepository<T> {
      * В этом поле хрантся экземпляры класс Person.
      */
     private T[] arr;
-
-    private List<IDivision> divisions;
 
     /**
      * индекс последнего добаленного элемента.
@@ -49,7 +45,6 @@ public class Repository<T> implements IRepository<T> {
      */
     public Repository() {
         arr = (T[])(new Object[INITLENGTH]);
-        divisions = new ArrayList<>();
     }
 
     /**
@@ -66,22 +61,6 @@ public class Repository<T> implements IRepository<T> {
     }
 
     /**
-     * Ищет в списке подразделений по имени,
-     * если не находит, то создаёт новое.
-     */
-    public IDivision getDivision(String name) {
-        for (IDivision i : divisions) {
-            if (i.getName().equals(name)) {
-                return i;
-            }
-        }
-
-        IDivision division = new Division(name);
-        divisions.add(division);
-        return division;
-    }
-
-    /**
      * приведение к списку.
      */
     public List<T> toList() {
@@ -94,7 +73,6 @@ public class Repository<T> implements IRepository<T> {
      */
     public T get(final int index) {
         if (index < arr.length && index >= 0) {
-            if ( arr[index] != null)
             return arr[index];
         }
 
@@ -119,10 +97,12 @@ public class Repository<T> implements IRepository<T> {
      * @param condition
      */
     public IRepository<T> searchBy(final Predicate<T> condition) {
-        IRepository repository = new Repository();
+        IRepository<T> repository = new Repository<>();
         for (int i = 0; i < arr.length; i++) {
-            if (condition.test(arr[i])) {
-                repository.add(arr[i]);
+            if (arr[i] != null) {
+                if (condition.test(arr[i])) {
+                    repository.add(arr[i]);
+                }
             }
         }
         return repository;
@@ -147,6 +127,24 @@ public class Repository<T> implements IRepository<T> {
             newArr[++lastAddIndex] = person != null ?  person : null;
             arr = newArr;
         }
+    }
+
+    public T addAndReturn(final T person) {
+        if (lastAddIndex + 1 < arr.length) {
+            arr[++lastAddIndex] = person != null ? person : null;
+        } else {
+            T[] newArr =
+                    (T[]) new Object[(int) (arr.length
+                            + arr.length * ARRSIZEINCREASEFACTOR)];
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] != null) {
+                    newArr[i] =  arr[i];
+                }
+            }
+            newArr[++lastAddIndex] = person != null ?  person : null;
+            arr = newArr;
+        }
+        return  person;
     }
 
     /**

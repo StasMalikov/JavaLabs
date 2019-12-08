@@ -7,6 +7,7 @@ import main.personEnv.Person;
 import main.personEnv.Repository;
 import org.junit.Assert;
 import org.junit.Test;
+import ru.vsu.lab.entities.IDivision;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.enums.Gender;
 import ru.vsu.lab.repository.IRepository;
@@ -46,6 +47,26 @@ public class RepositoryTest {
         arr.add(p3);
         arr.add(p4);
         arr.add(p5);
+    }
+
+    @Test
+    public void searchByNameDivision() {
+        IRepository<IDivision> diviasions = new Repository<>();
+
+        IDivision a = new Division("a");
+        IDivision b = new Division("b");
+
+        diviasions.add(a);
+        diviasions.add(b);
+
+        final Predicate<IDivision> isName = new Predicate<IDivision>() {
+            @Override
+            public boolean test(IDivision division) {
+                return "a".equals(division.getName());
+            }
+        };
+        IRepository<IDivision> res = diviasions.searchBy(isName);
+        Assert.assertEquals(diviasions.get(0) ,res.get(0));
     }
 
     @Test

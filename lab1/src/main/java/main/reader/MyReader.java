@@ -1,10 +1,12 @@
 package main.reader;
 
+import main.personEnv.Division;
 import main.personEnv.Person;
 import main.personEnv.Repository;
+import ru.vsu.lab.entities.IDivision;
 import ru.vsu.lab.entities.enums.Gender;
 import ru.vsu.lab.repository.IRepository;
-
+import java.util.function.Predicate;
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,9 +27,11 @@ public class MyReader {
     public static final int DIVISIONINDEX = 4;
     public static final int SALARYINDEX = 5;
 
+    private IRepository<IDivision> divisions;
 
-
-
+    public IRepository<IDivision> getDivisions() {
+        return divisions;
+    }
     /**
      * чтение из файла построчно.
      * @param fileName путь к фалйлу.
@@ -48,7 +52,7 @@ public class MyReader {
      */
     public IRepository parse(final List<String> lines) {
         IRepository repository = new Repository();
-
+        divisions = new Repository<>();
         for (int i = 1; i < lines.size(); i++) {
             String[] subStr;
             subStr = lines.get(i).split(";");
@@ -59,9 +63,21 @@ public class MyReader {
                     LocalDate.parse(subStr[BIRTHDATEINDEX], DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.US)),
                     subStr[GENDERINDEX].equals("Male") ? Gender.MALE :( subStr[2].equals("Female") ? Gender.FEMALE : null),
                     new BigDecimal(subStr[SALARYINDEX]),
-                    ((Repository) repository).getDivision(subStr[DIVISIONINDEX])
+                    divisions.searchBy(getPredicate(subStr[DIVISIONINDEX])).get(0) == null ?
+                            ((Repository<IDivision>) divisions).addAndReturn(new Division(subStr[DIVISIONINDEX]))
+                    :
+                            divisions.searchBy(getPredicate(subStr[DIVISIONINDEX])).get(0)
             ));
         }
         return repository;
+    }
+
+    private Predicate<IDivision> getPredicate(final String name) {
+       return new Predicate<IDivision>() {
+            @Override
+            public boolean test(IDivision division) {
+                return name.equals(division.getName());
+            }
+        };
     }
 }
