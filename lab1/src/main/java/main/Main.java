@@ -11,6 +11,7 @@ import ru.vsu.lab.repository.IRepository;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,10 +39,34 @@ public final class Main {
 //        for (int i = 0; i < ((Repository<IPerson>) arr).getLength(); i++) {
 //            System.out.println(arr.get(i).toString());
 //        }
-        Map<String, List<IPerson>> res = StreamApi.getMapDivisionAndTotalSalary(arr.toList());
-
-        for (Map.Entry<String, List<IPerson>> item : res.entrySet()) {
-            System.out.println(item.getKey());
+        List<IPerson> list = arr.toList();
+        List<IPerson> res = new ArrayList<>();
+        for (IPerson i : list) {
+            if (i != null) {
+                res.add(i);
+            }
         }
+
+//        StreamApi.getMapDivisionAndTotalSalary(res).forEach((key, value) -> {
+//            System.out.println("Division : " + key + " sum_salary : " + value);
+//        });
+
+//        StreamApi.getMapSortbyNameAndSalary2000(res).forEach((key, value) -> {
+//            outputPerson((IPerson) value);
+//            System.out.println(outputPerson((IPerson) value));
+//        });
+
+        StreamApi.getMapSortByNameAA(res).forEach((key, value) -> {
+            outputPerson((IPerson) value);
+            System.out.println(outputPerson((IPerson) value));
+        });
+
+
+    }
+
+    static String outputPerson(IPerson inpPr) {
+        return String.format(" | ID " + inpPr.getId() + " | Имя " + inpPr.getFirstName() + ' ' + inpPr.getLastName() +
+                " | ДР " + inpPr.getBirthdate().toString() + " | Возраст " + inpPr.getAge() + " | Пол " + inpPr.getGender() +
+                " | Division " + inpPr.getDivision().getName() + ' ' + inpPr.getDivision().getId() + " | Salary " + inpPr.getSalary());
     }
 }
