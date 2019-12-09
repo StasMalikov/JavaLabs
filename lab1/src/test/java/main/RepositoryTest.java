@@ -1,11 +1,11 @@
 package main;
 
 import main.comparators.BirthdateCopmorator;
-import main.comparators.FirstNameComporator;
 import main.personEnv.Division;
+import main.personEnv.LabFactory;
 import main.personEnv.Person;
 import main.personEnv.Repository;
-import main.reader.InjectUtils;
+import main.injector.Injector;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.vsu.lab.entities.IDivision;
@@ -42,9 +42,9 @@ public class RepositoryTest {
          p5 = new Person(1, "EEE", "",
                 java.time.LocalDate.of(2019,11,11),
                 Gender.FEMALE, new BigDecimal(1000), new Division("E"));
-
-        arr = new Repository<>();
-        arr = InjectUtils.inject(arr);
+        LabFactory factory = new LabFactory();
+        IPerson person = factory.createPerson();
+        arr =  factory.createRepository((Class<IPerson>) person.getClass());
         arr.add(p1);
         arr.add(p2);
         arr.add(p3);
@@ -166,7 +166,7 @@ public class RepositoryTest {
     @Test
     public void SortByDate() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         IRepository<IPerson> actualArr = new Repository<>();
-        actualArr = InjectUtils.inject(actualArr);
+        actualArr = Injector.inject(actualArr);
         actualArr.add(p5);
         actualArr.add(p4);
         actualArr.add(p3);

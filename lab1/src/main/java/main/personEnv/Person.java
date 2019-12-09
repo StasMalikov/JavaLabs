@@ -49,6 +49,8 @@ public final class Person implements IPerson, Cloneable {
      */
     private BigDecimal salary;
 
+    public Person() {}
+
     /**
      * Конструктор, заполняющий все поля класса.
      */

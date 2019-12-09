@@ -1,4 +1,4 @@
-package main.reader;
+package main.injector;
 
 import main.injector.LabInjector;
 import ru.vsu.lab.repository.IRepository;
@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
-public class InjectUtils {
+public class Injector {
     public static <T> IRepository<T> inject(IRepository<T> repo) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
         for (Field field : repo.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(LabInjector.class)) {

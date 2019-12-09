@@ -1,9 +1,11 @@
 package main.reader;
 
 import main.personEnv.Division;
+import main.personEnv.LabFactory;
 import main.personEnv.Person;
 import main.personEnv.Repository;
 import ru.vsu.lab.entities.IDivision;
+import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.enums.Gender;
 import ru.vsu.lab.repository.IRepository;
 import java.util.function.Predicate;
@@ -50,8 +52,10 @@ public class MyReader {
     /**
      * Парсим список строк в репозотирой Person.
      */
-    public IRepository parse(final List<String> lines) {
-        IRepository repository = new Repository();
+    public IRepository<IPerson> parse(final List<String> lines) {
+        LabFactory factory = new LabFactory();
+        IPerson person = factory.createPerson();
+        IRepository<IPerson> repository = factory.createRepository((Class<IPerson>) person.getClass());
         divisions = new Repository<>();
         for (int i = 1; i < lines.size(); i++) {
             String[] subStr;
