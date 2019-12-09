@@ -37,4 +37,10 @@ public class StreamApi {
                 .collect(Collectors.toMap(IPerson::getId,
                         p -> p));
     }
+
+    public static Map getMapSortByYearCount(List<IPerson> listPerson) { //Map<String, BigDecimal>
+        return listPerson
+                .stream()
+                .collect(Collectors.groupingBy(p->p.getBirthdate().getYear(), Collectors.counting()));
+    }
 }

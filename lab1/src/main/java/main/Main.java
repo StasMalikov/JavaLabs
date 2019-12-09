@@ -56,9 +56,13 @@ public final class Main {
 //            System.out.println(outputPerson((IPerson) value));
 //        });
 
-        StreamApi.getMapSortByNameAA(res).forEach((key, value) -> {
-            outputPerson((IPerson) value);
-            System.out.println(outputPerson((IPerson) value));
+//        StreamApi.getMapSortByNameAA(res).forEach((key, value) -> {
+//            outputPerson((IPerson) value);
+//            System.out.println(outputPerson((IPerson) value));
+//        });
+
+        StreamApi.getMapSortByYearCount(res).forEach((key, value) -> {
+            System.out.println("Date : " + key + " count_people : " + value);
         });
 
 
