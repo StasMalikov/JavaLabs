@@ -9,6 +9,9 @@ import ru.vsu.lab.repository.IRepository;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Класс генератор.
+ */
 public class LabFactory implements ILabFactory {
     /** @return Factory method returning a new person  */
     @Override
@@ -24,19 +27,11 @@ public class LabFactory implements ILabFactory {
 
     /** @return Factory method returning a new repository */
     @Override
-    public <T> IRepository<T> createRepository(Class<T> clazz) {
+    public <T> IRepository<T> createRepository(final Class<T> clazz) {
         IRepository<T> repo = new Repository<>();
         try {
            return Injector.inject(repo);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

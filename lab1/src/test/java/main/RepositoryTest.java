@@ -1,6 +1,7 @@
 package main;
 
 import main.comparators.BirthdateCopmorator;
+import main.injector.MyExeption;
 import main.personEnv.Division;
 import main.personEnv.LabFactory;
 import main.personEnv.Person;
@@ -74,7 +75,9 @@ public class RepositoryTest {
 
     @Test
     public void searchByName() {
-        IRepository test = new Repository();
+        LabFactory factory = new LabFactory();
+        IPerson person = factory.createPerson();
+        IRepository<IPerson> test = factory.createRepository((Class<IPerson>) person.getClass());
         test.add(p1);
 
         final Predicate<IPerson> isFirstName = new Predicate<IPerson>() {
@@ -89,7 +92,9 @@ public class RepositoryTest {
 
     @Test
     public void searchById() {
-        IRepository test = new Repository();
+        LabFactory factory = new LabFactory();
+        IPerson person = factory.createPerson();
+        IRepository<IPerson> test = factory.createRepository((Class<IPerson>) person.getClass());
         test.add(p1);
 
         final Predicate<IPerson> isId = new Predicate<IPerson>() {
@@ -104,7 +109,9 @@ public class RepositoryTest {
 
     @Test
     public void add() {
-        IRepository<IPerson> test = new Repository<>();
+        LabFactory factory = new LabFactory();
+        IPerson person = factory.createPerson();
+        IRepository<IPerson> test = factory.createRepository((Class<IPerson>) person.getClass());
         test.add(((Person)p1).clone());
         test.add(((Person)p2).clone());
         test.add(((Person)p3).clone());
@@ -112,7 +119,7 @@ public class RepositoryTest {
         test.add(((Person)p5).clone());
         test.add( 2,p5);
 
-        IRepository<IPerson> test2 = new Repository<>();
+        IRepository<IPerson> test2 = factory.createRepository((Class<IPerson>) person.getClass());
         test2.add(((Person)p1).clone());
         test2.add(((Person)p2).clone());
         test2.add(((Person)p5).clone());
@@ -127,7 +134,9 @@ public class RepositoryTest {
 
 //    @Test
 //    public void delete() {
-//        Repository test = new Repository();
+//        LabFactory factory = new LabFactory();
+//        IPerson person = factory.createPerson();
+//        Repository test = factory.createRepository((Class<IPerson>) person.getClass());
 //        test.add(p1.clone());
 //        test.add(p2.clone());
 //        test.add(p3.clone());
@@ -147,25 +156,11 @@ public class RepositoryTest {
 //        }
 //    }
 
-//        @Test
-//    public void SortByName() {
-//        Repository actualArr = new Repository();
-//        actualArr.add(p5.clone());
-//        actualArr.add(p4.clone());
-//        actualArr.add(p3.clone());
-//        actualArr.add(p2.clone());
-//        actualArr.add(p1.clone());
-//        actualArr.sortBy(new FirstNameComporator());
-//
-//        for (int i = 0; i < actualArr.getLength(); i++) {
-//            Assert.assertEquals(actualArr.get(i) , arr.get(i));
-//        }
-//    }
-
-
     @Test
-    public void SortByDate() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        IRepository<IPerson> actualArr = new Repository<>();
+    public void SortByDate() throws MyExeption {
+        LabFactory factory = new LabFactory();
+        IPerson person = factory.createPerson();
+        IRepository<IPerson> actualArr = factory.createRepository((Class<IPerson>) person.getClass());
         actualArr = Injector.inject(actualArr);
         actualArr.add(p5);
         actualArr.add(p4);

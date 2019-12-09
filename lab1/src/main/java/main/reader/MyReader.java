@@ -22,15 +22,45 @@ import java.util.Locale;
  */
 public class MyReader {
 
+    /**
+     * constant.
+     */
     public static final int IDINDEX = 0;
+
+    /**
+     * constant.
+     */
     public static final int FIRSTNAMEINDEX = 1;
+
+    /**
+     * constant.
+     */
     public static final int GENDERINDEX = 2;
+
+    /**
+     * constant.
+     */
     public static final int BIRTHDATEINDEX = 3;
+
+    /**
+     * constant.
+     */
     public static final int DIVISIONINDEX = 4;
+
+    /**
+     * constant.
+     */
     public static final int SALARYINDEX = 5;
 
+    /**
+     * Список подразделений.
+     */
     private IRepository<IDivision> divisions;
 
+    /**
+     * get.
+     * @return
+     */
     public IRepository<IDivision> getDivisions() {
         return divisions;
     }
@@ -55,7 +85,8 @@ public class MyReader {
     public IRepository<IPerson> parse(final List<String> lines) {
         LabFactory factory = new LabFactory();
         IPerson person = factory.createPerson();
-        IRepository<IPerson> repository = factory.createRepository((Class<IPerson>) person.getClass());
+        IRepository<IPerson> repository =
+                factory.createRepository((Class<IPerson>) person.getClass());
         divisions = new Repository<>();
         for (int i = 1; i < lines.size(); i++) {
             String[] subStr;
@@ -64,11 +95,17 @@ public class MyReader {
                     Integer.parseInt(subStr[IDINDEX]),
                     subStr[FIRSTNAMEINDEX],
                     "",
-                    LocalDate.parse(subStr[BIRTHDATEINDEX], DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.US)),
-                    subStr[GENDERINDEX].equals("Male") ? Gender.MALE :( subStr[2].equals("Female") ? Gender.FEMALE : null),
+                    LocalDate.parse(subStr[BIRTHDATEINDEX],
+                            DateTimeFormatter.ofPattern(
+                                    "dd.MM.yyyy", Locale.US)),
+                    subStr[GENDERINDEX].equals("Male") ?
+                            Gender.MALE :(subStr[2].equals("Female") ?
+                            Gender.FEMALE : null),
                     new BigDecimal(subStr[SALARYINDEX]),
-                    divisions.searchBy(getPredicate(subStr[DIVISIONINDEX])).get(0) == null ?
-                            ((Repository<IDivision>) divisions).addAndReturn(new Division(subStr[DIVISIONINDEX]))
+                    divisions.searchBy(getPredicate(
+                            subStr[DIVISIONINDEX])).get(0) == null ?
+                            ((Repository<IDivision>) divisions).addAndReturn(
+                                    new Division(subStr[DIVISIONINDEX]))
                     :
                             divisions.searchBy(getPredicate(subStr[DIVISIONINDEX])).get(0)
             ));
@@ -76,6 +113,9 @@ public class MyReader {
         return repository;
     }
 
+    /**
+     * Предикат для сравнения подразделений по имени.
+     */
     private Predicate<IDivision> getPredicate(final String name) {
        return new Predicate<IDivision>() {
             @Override

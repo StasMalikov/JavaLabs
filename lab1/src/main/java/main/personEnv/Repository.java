@@ -1,7 +1,6 @@
 package main.personEnv;
 
 import main.injector.LabInjector;
-import main.sorts.BubbleSort;
 import main.sorts.ISort;
 import ru.vsu.lab.repository.IRepository;
 
@@ -13,8 +12,12 @@ import java.util.function.Predicate;
  */
 public class Repository<T> implements IRepository<T> {
 
+    /**
+     * Поле класса сортировки.
+     */
     @LabInjector
     private ISort<T> sorter;
+
     /**
      * В этом поле хрантся экземпляры класс Person.
      */
@@ -133,6 +136,11 @@ public class Repository<T> implements IRepository<T> {
         }
     }
 
+    /**
+     * Добавляет в массив значение и возвращяет его.
+     * @param person
+     * @return
+     */
     public T addAndReturn(final T person) {
         if (lastAddIndex + 1 < arr.length) {
             arr[++lastAddIndex] = person != null ? person : null;
@@ -170,7 +178,7 @@ public class Repository<T> implements IRepository<T> {
             } else {
                 T[] newArr =
                         (T[])new Object[(int) (arr.length
-                                + arr.length * ARRSIZEINCREASEFACTOR)];
+                                + arr.length * ARRSIZEINCREASEFACTOR )];
                 for (int i = 0; i < index; i++) {
                     newArr[i] = arr[i];
                 }

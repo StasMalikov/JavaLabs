@@ -49,7 +49,9 @@ public final class Person implements IPerson, Cloneable {
      */
     private BigDecimal salary;
 
-    public Person() {}
+    public Person() {
+
+    }
 
     /**
      * Конструктор, заполняющий все поля класса.
@@ -67,7 +69,11 @@ public final class Person implements IPerson, Cloneable {
         this.division = division;
     }
 
-    public Person(Person person) {
+    /**
+     * Constructor.
+     * @param person
+     */
+    public Person(final Person person) {
         this.id = person.getId();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
@@ -243,13 +249,18 @@ public final class Person implements IPerson, Cloneable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getBirthdate(), getGender(), getDivision(), getSalary());
+        return Objects.hash(getId(),
+                getFirstName(), getLastName(),
+                getBirthdate(), getGender(),
+                getDivision(), getSalary());
     }
 
     /**
      * @return clone of this obj
      */
     public IPerson clone() {
-        return new Person(id, firstName, lastName, birthdate, gender, salary, division);
+        return new Person(id,
+                firstName, lastName,
+                birthdate, gender, salary, division);
     }
 }
