@@ -5,16 +5,19 @@ public class SingleThreadedMultiplication {
     private Integer[][] arr2;
 
     public Integer[][] multiplicate(Integer[][] arr1, Integer[][] arr2){
+
         Integer[][] result = new Integer[arr1.length][arr2[0].length];
         this.arr1 = arr1;
         this.arr2 = arr2;
 
+        long m = System.currentTimeMillis();
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[i].length; j++) {
                 result[i][j] = calculateCell(i,j);
             }
         }
-
+        System.out.print((double) (System.currentTimeMillis() - m));
+        System.out.print(" милисекунд отработало однопоточное умножение\n");
         return result;
     }
 

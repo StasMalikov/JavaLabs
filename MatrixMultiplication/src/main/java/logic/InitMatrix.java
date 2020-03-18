@@ -1,6 +1,5 @@
 package logic;
 
-import java.io.EOFException;
 import java.util.Scanner;
 import static java.lang.System.out;
 
@@ -13,8 +12,6 @@ public class InitMatrix {
     public InitMatrix() throws NullPointerException {
         initArrs();
         initMatrixRandomNumbers();
-        printMatrix(arr1);
-        printMatrix(arr2);
     }
 
     private void initArrs() throws NullPointerException {
