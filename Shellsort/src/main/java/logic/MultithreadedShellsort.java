@@ -6,22 +6,22 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class MultithreadedMultiplication {
-    private List<MyTread> treads;
-    private CommonData commonData;
+public class MultithreadedShellsort {
 
+    private CommonData data;
+    private List<MyTread> treads;
     private int treadsCount;
 
-    public MultithreadedMultiplication(Integer[][] arr1, Integer[][] arr2) {
+    public MultithreadedShellsort(int arr[]) {
+        this.data = new CommonData(arr);
         treads = new ArrayList<>();
-        commonData = new CommonData(arr1, arr2);
         getTreadsCount();
     }
 
-    public Integer[][] multiply() throws InterruptedException {
+    public int[] sort() throws InterruptedException {
 
         for(int i = 0; i < this.treadsCount; i++){
-            this.treads.add(new MyTread(this.commonData));
+            this.treads.add(new MyTread(this.data));
         }
 
         long m = System.currentTimeMillis();
@@ -30,9 +30,9 @@ public class MultithreadedMultiplication {
             t.join();
         }
         System.out.print((double) (System.currentTimeMillis() - m));
-        System.out.print(" милисекунд отработало многопоточное умножение\n");
+        System.out.print(" милисекунд отработала многопоточная сортировка\n");
 
-        return commonData.getResult();
+        return data.getArr();
     }
 
     private void getTreadsCount() {
