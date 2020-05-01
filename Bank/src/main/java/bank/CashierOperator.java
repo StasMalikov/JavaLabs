@@ -32,10 +32,11 @@ public class CashierOperator extends Thread {
                     doOperations(operation);
                     operations.closeOperation(operation);
                 } else {
-                    System.out.println("Операционистка бездействует.");
+                    //System.out.println("Операционистка бездействует.");
                     Thread.sleep(NOOPERATIONSDELAY);
                 }
             } catch (InterruptedException e) {
+                System.out.println("Операционистка " + getName() + " закончила работу.");
                 break;
             }
         }
@@ -50,7 +51,7 @@ public class CashierOperator extends Thread {
                     get((Long) pair.getValue(), operation);
                     break;
                 case PUT:
-                    put((Long) pair.getValue());
+                    put((Long) pair.getValue(), operation);
                     break;
             }
         }
@@ -67,19 +68,27 @@ public class CashierOperator extends Thread {
                 System.out.println("Ошибка! Банк не может выдать " + money);
             }
         }
-        catch(InterruptedException e){}
+        catch(InterruptedException e){
+            operations.rollback(operation);
+            System.out.println("Операция GET прервана " + this.getName());
+            this.interrupt();
+        }
     }
 
-    public void put(Long money) {
+    public void put(Long money, Operation operation) {
         try{
             Thread.sleep(PUTOPERATIONDELAY);
             int putOperationResult = bank.putMoney(money);
             if (putOperationResult > 0) {
-                System.out.println("Деньги в размере " + money + "успешно положены в банк");
+                System.out.println("Деньги в размере " + money + " успешно положены в банк");
             } else {
-                System.out.println("Ошибка! Вы попытались положить" + money + "денег");
+                System.out.println("Ошибка! Вы попытались положить " + money + " денег");
             }
         }
-        catch(InterruptedException e){}
+        catch(InterruptedException e){
+            operations.rollback(operation);
+            System.out.println("Операция PUT прервана" + this.getName());
+            this.interrupt();
+        }
     }
 }

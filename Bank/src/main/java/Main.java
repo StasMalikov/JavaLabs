@@ -7,6 +7,5 @@ public class Main {
 
         ConsoleInteraction ci = new ConsoleInteraction(bs);
         ci.start();
-        int i = 0;
     }
 }

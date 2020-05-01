@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Operation {
     private Customer customer;
-    Map<OperationsNames, Long> operations;
+    private Map<OperationsNames, Long> operations;
 
     public Customer getCustomer() {
         return customer;

@@ -38,13 +38,13 @@ public class BankService {
     public Customer newCustomer() {
         Customer c = new Customer(operations);
         customers.add(c);
+        c.start();
         return c;
     }
 
     public void stopAll(){
         for(CashierOperator i : cashierOperators){
             i.interrupt();
-            System.out.println("Поток остановлен");
         }
     }
 }

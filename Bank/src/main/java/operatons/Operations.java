@@ -6,14 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Operations {
-    List<Operation> operations;
-    List<Operation> processingOperations;
-    List<Operation> closedOperations;
+    private List<Operation> operations;
+    private List<Operation> processingOperations;
+    private List<Operation> closedOperations;
 
     public Operations() {
         operations = new ArrayList<>();
         processingOperations = new ArrayList<>();
         closedOperations = new ArrayList<>();
+    }
+
+    public synchronized void rollback(Operation operation) {
+        operations.add(operation);
     }
 
     public synchronized Operation getOpenOperation() {

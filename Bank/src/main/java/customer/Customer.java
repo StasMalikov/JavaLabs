@@ -9,7 +9,7 @@ public class Customer extends Thread {
     private Operations operations;
     private static final int WAITDELAY = 8000;
 
-    Long money;
+    private Long money;
 
     public synchronized void addMoney(Long money) {
         this.money += money;
@@ -18,24 +18,30 @@ public class Customer extends Thread {
     public Customer(Operations operations){
         super();
         this.operations = operations;
+        this.money = Long.valueOf(0);
     }
 
     public void run(){
-        setOperation(OperationsNames.PUT, Long.valueOf(1000));
-        setOperation(OperationsNames.GET, Long.valueOf(150));
-        while (! operations.isServiced(this)){
+        while (!isInterrupted()){
             try{
-                System.out.println("Клиент ожидает обслуживания.");
+                //System.out.println("Клиент ожидает обслуживания.");
                 Thread.sleep(WAITDELAY);
             }
-                catch(InterruptedException e){}
+                catch(InterruptedException e){
+                break;
+                }
         }
-        System.out.println("Клиент обслужен.");
+        System.out.println("Обслуживание клиента " + getName() + "завершено.");
     }
 
     public void setOperation(OperationsNames operationName, Long money) {
         Operation operation = new Operation(this);
         operation.addOperation(operationName, money);
         operations.addOperation(operation);
+        System.out.println("Добавлена операция " + operationName.toString() + " " + money + " " + this.getName());
+    }
+
+    public void finishCustomerService() {
+        this.interrupt();
     }
 }
