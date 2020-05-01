@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.time.LocalDate;
 
+import org.apache.log4j.Logger;
 import ru.vsu.lab.entities.IDivision;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.enums.Gender;
@@ -12,6 +13,8 @@ import ru.vsu.lab.entities.enums.Gender;
  * Класс человека.
  */
 public final class Person implements IPerson, Cloneable {
+
+    private static final Logger log = Logger.getLogger(Person.class);
 
     /**
      * идентифицирующее поле.
@@ -50,7 +53,6 @@ public final class Person implements IPerson, Cloneable {
     private BigDecimal salary;
 
     public Person() {
-
     }
 
     /**
@@ -190,10 +192,11 @@ public final class Person implements IPerson, Cloneable {
                 && now.getDayOfYear() < birthdate.getDayOfYear())) {
             return -1;
         }
-
+        log.info("getAge()");
         return now.getDayOfYear() >= birthdate.getDayOfYear()
                 ? now.getYear() - birthdate.getYear() :
                 now.getYear() - birthdate.getYear() - 1;
+
     }
 
     /**
@@ -235,6 +238,7 @@ public final class Person implements IPerson, Cloneable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
+        log.info("equals(final Object o)");
         return Objects.equals(getId(), person.getId()) &&
                 Objects.equals(getFirstName(), person.getFirstName()) &&
                 Objects.equals(getLastName(), person.getLastName()) &&
@@ -249,6 +253,7 @@ public final class Person implements IPerson, Cloneable {
      */
     @Override
     public int hashCode() {
+        log.info("hashCode()");
         return Objects.hash(getId(),
                 getFirstName(), getLastName(),
                 getBirthdate(), getGender(),
@@ -259,6 +264,7 @@ public final class Person implements IPerson, Cloneable {
      * @return clone of this obj
      */
     public IPerson clone() {
+        log.info("clone()");
         return new Person(id,
                 firstName, lastName,
                 birthdate, gender, salary, division);

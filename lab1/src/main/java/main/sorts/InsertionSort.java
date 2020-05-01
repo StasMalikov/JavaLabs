@@ -1,11 +1,15 @@
 package main.sorts;
 
+import org.apache.log4j.Logger;
+
 import java.util.Comparator;
 
 /**
  * Класс сортировок вставками.
  */
 public class InsertionSort<T> implements ISort<T>{
+
+    private static final Logger log = Logger.getLogger(InsertionSort.class);
 
     /**
      *Сортировка, которая работает с массивом Person.
@@ -23,6 +27,8 @@ public class InsertionSort<T> implements ISort<T>{
             }
             arr[i + 1] = value;
         }
+
+        log.info("Array is sorted by BubbleSort");
         return arr;
     }
 }

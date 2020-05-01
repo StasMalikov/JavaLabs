@@ -4,6 +4,7 @@ import main.personEnv.Division;
 import main.personEnv.LabFactory;
 import main.personEnv.Person;
 import main.personEnv.Repository;
+import org.apache.log4j.Logger;
 import ru.vsu.lab.entities.IDivision;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.enums.Gender;
@@ -21,6 +22,7 @@ import java.util.Locale;
  *Класс для функций чтения из файлов.
  */
 public class MyReader {
+    private static final Logger log = Logger.getLogger(MyReader.class);
 
     /**
      * constant.
@@ -76,6 +78,7 @@ public class MyReader {
         while ((line = reader.readLine()) != null) {
             lines.add(line);
         }
+        log.info("Data from the file is read");
         return lines;
     }
 
@@ -110,6 +113,7 @@ public class MyReader {
                             divisions.searchBy(getPredicate(subStr[DIVISIONINDEX])).get(0)
             ));
         }
+        log.info("Data is parsed");
         return repository;
     }
 
@@ -117,6 +121,7 @@ public class MyReader {
      * Предикат для сравнения подразделений по имени.
      */
     private Predicate<IDivision> getPredicate(final String name) {
+        log.info("Get IDivision predicate");
        return new Predicate<IDivision>() {
             @Override
             public boolean test(IDivision division) {

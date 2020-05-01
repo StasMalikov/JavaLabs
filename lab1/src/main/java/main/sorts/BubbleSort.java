@@ -1,11 +1,16 @@
 package main.sorts;
 
+import main.reader.MyReader;
+import org.apache.log4j.Logger;
+
 import java.util.Comparator;
 
 /**
  * Класс сортировки пузырьком.
  */
 public class BubbleSort<T> implements ISort<T>{
+
+    private static final Logger log = Logger.getLogger(BubbleSort.class);
 
     /**
      *Сортировка, которая работает с массивом Person.
@@ -22,6 +27,7 @@ public class BubbleSort<T> implements ISort<T>{
                 }
             }
         }
+        log.info("Array is sorted by BubbleSort");
         return arr;
     }
 }

@@ -1,6 +1,7 @@
 package main.personEnv;
 
 import main.injector.Injector;
+import org.apache.log4j.Logger;
 import ru.vsu.lab.entities.IDivision;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.factory.ILabFactory;
@@ -13,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
  * Класс генератор.
  */
 public class LabFactory implements ILabFactory {
+    private static final Logger log = Logger.getLogger(LabFactory.class);
+
     /** @return Factory method returning a new person  */
     @Override
     public IPerson createPerson() {
@@ -34,12 +37,14 @@ public class LabFactory implements ILabFactory {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.info("createRepository(final Class<T> clazz)");
         return null;
     }
 
     /** @return  Factory method returning a new repository without generics */
     @Override
     public IPersonRepository createPersonRepository() {
+        log.info("createPersonRepository()");
         return null;
     }
 }

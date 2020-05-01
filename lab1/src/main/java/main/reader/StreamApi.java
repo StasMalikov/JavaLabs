@@ -1,5 +1,6 @@
 package main.reader;
 
+import org.apache.log4j.Logger;
 import ru.vsu.lab.entities.IPerson;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
  * Stream api class.
  */
 public class StreamApi {
-
+    private static final Logger log = Logger.getLogger(StreamApi.class);
     /**
      * Map из названия департамента и суммы зарплат.
      * @param listPerson
@@ -21,6 +22,8 @@ public class StreamApi {
         Map<String, List<IPerson>> a1 = listPerson
                 .stream()
                 .collect(Collectors.groupingBy(p -> p.getDivision().getName() ));
+
+        log.info("getMapDivisionAndTotalSalary is used");
 
         return a1.entrySet()
                 .stream()
@@ -36,6 +39,7 @@ public class StreamApi {
      * @return
      */
     public  Map getMapSortbyNameAndSalary2000(List<IPerson> listPerson) {  // Map<Integer, Person>
+        log.info("getMapSortbyNameAndSalary2000 is used");
         return listPerson.stream()
                 .filter(p -> p.getAge() > 30 &&
                         p.getFirstName().toLowerCase().contains("a") &&
@@ -50,6 +54,7 @@ public class StreamApi {
      * @return
      */
     public  Map getMapSortByNameAA(List<IPerson> listPerson) {  // Map<Integer, Person>
+        log.info("getMapSortByNameAA is used");
         return listPerson.stream()
                 .filter(p -> p.getFirstName().toLowerCase().contains("aa"))
                 .collect(Collectors.toMap(IPerson::getId,
@@ -62,6 +67,7 @@ public class StreamApi {
      * @return
      */
     public  Map getMapSortByYearCount(List<IPerson> listPerson) { //Map<String, BigDecimal>
+        log.info("getMapSortByYearCount is used");
         return listPerson
                 .stream()
                 .collect(Collectors.groupingBy(p->p.getBirthdate().getYear(), Collectors.counting()));

@@ -1,11 +1,9 @@
 package main.injector;
 
-import main.reader.MyReader;
-import ru.vsu.lab.repository.IRepository;
+import main.personEnv.LabFactory;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -17,6 +15,8 @@ import java.util.Properties;
  */
 public class Injector {
 
+    private static final Logger log = Logger.getLogger(Injector.class);
+
     /**
      *Конструктор класса.
      */
@@ -27,7 +27,6 @@ public class Injector {
      */
     public static <T> T inject(T repo) throws MyExeption {
         try {
-
             List<List<String>> arr = getSortName();
            for (Field field : repo.getClass().getDeclaredFields()) {
                if (field.isAnnotationPresent(LabInjector.class)) {
@@ -41,8 +40,10 @@ public class Injector {
                    }
                }
            }
+           log.info("inject(T repo)");
            return repo;
        } catch (Exception e) {
+            log.error(e);
             new MyExeption(e.toString());
        }
             return null;

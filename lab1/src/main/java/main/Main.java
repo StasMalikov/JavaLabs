@@ -34,7 +34,7 @@ public final class Main {
      */
     public static void main(final String[] args) throws IOException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         MyReader r = new MyReader();
-        String way = "C:\\Users\\StasMalikov\\Desktop\\java\\JavaLabs\\lab1\\src\\main\\resources\\persons.csv";
+        String way = "./src/main/resources/persons.csv";
         IRepository<IPerson> arr = r.parse(r.read(way));
 //        for (int i = 0; i < ((Repository<IPerson>) arr).getLength(); i++) {
 //            System.out.println(arr.get(i).toString());
@@ -64,7 +64,6 @@ public final class Main {
         si.getMapSortByYearCount(res).forEach((key, value) -> {
             System.out.println("Date : " + key + " count_people : " + value);
         });
-
 
     }
 

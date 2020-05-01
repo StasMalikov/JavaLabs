@@ -1,7 +1,9 @@
 package main.personEnv;
 
 import main.injector.LabInjector;
+import main.reader.MyReader;
 import main.sorts.ISort;
+import org.apache.log4j.Logger;
 import ru.vsu.lab.repository.IRepository;
 
 import java.util.*;
@@ -11,6 +13,8 @@ import java.util.function.Predicate;
  * Класс - репозиторий классов Person.
  */
 public class Repository<T> implements IRepository<T> {
+
+    private static final Logger log = Logger.getLogger(Repository.class);
 
     /**
      * Поле класса сортировки.
@@ -82,7 +86,6 @@ public class Repository<T> implements IRepository<T> {
         if (index < arr.length && index >= 0) {
             return arr[index];
         }
-
         return null;
     }
 
@@ -112,6 +115,7 @@ public class Repository<T> implements IRepository<T> {
                 }
             }
         }
+        log.info("searchBy(final Predicate<T> condition) call");
         return repository;
     }
 
@@ -134,6 +138,7 @@ public class Repository<T> implements IRepository<T> {
             newArr[++lastAddIndex] = person != null ?  person : null;
             arr = newArr;
         }
+        log.info("add(final T person) call");
     }
 
     /**
@@ -156,6 +161,7 @@ public class Repository<T> implements IRepository<T> {
             newArr[++lastAddIndex] = person != null ?  person : null;
             arr = newArr;
         }
+        log.info("addAndReturn(final T person) call");
         return  person;
     }
 
@@ -194,6 +200,7 @@ public class Repository<T> implements IRepository<T> {
                 lastAddIndex++;
                 arr = newArr;
         }
+        log.info("add(final int index, final Object person) call");
     }
 
     /**
@@ -208,8 +215,10 @@ public class Repository<T> implements IRepository<T> {
                 arr[i] = arr[i + 1];
             }
             arr[lastAddIndex--] = null;
+            log.info("delete(final int index) call");
             return delete_item;
         }
+        log.info("delete(final int index) call");
         return null;
     }
 
@@ -218,6 +227,7 @@ public class Repository<T> implements IRepository<T> {
      * @param comparator
      */
 	public void sortBy(final Comparator<T> comparator) {
-        arr = sorter.sort(comparator, arr);
+	    arr = sorter.sort(comparator, arr);
+        log.info("sortBy(final Comparator<T> comparator) call");
 	}
 }
