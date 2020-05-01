@@ -27,6 +27,9 @@ public class MultithreadedShellsort {
         long m = System.currentTimeMillis();
         for(MyTread t: treads) {
             t.start();
+        }
+
+        for(MyTread t: treads) {
             t.join();
         }
         System.out.print((double) (System.currentTimeMillis() - m));

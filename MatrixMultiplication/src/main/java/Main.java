@@ -21,10 +21,10 @@ public class Main {
         //   m.printMatrix(m.getArr2());
 
         //   выводит результат однопоточного перемножения
-        //   m.printMatrix(s_res);
+         //  m.printMatrix(s_res);
 
         //   выводит результат многопоточного перемножения
-        //   m.printMatrix(m_res);
+         //  m.printMatrix(m_res);
 
     }
 }
